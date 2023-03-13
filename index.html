@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Calculator</title>
+	<link href="https://fonts.googleapis.com/css?family=Orbitron " rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+	 
+
+
+	<div class="calculator" id="calculator">
+		<input class="inputDisplay" v-model="result" @keyup.enter="equal()"  @keyup.backsapce="remov()" @keyup.esc="clear()">
+		<table>
+			<tr>
+				<td>
+					<input @click="clear()" type="button" value="C" style="background-color: red">
+				</td>
+				<td>
+					<input @click="remov()" type="button" value="del" style="background-color: #f09f00;">
+				</td>
+				<td>
+					<input @click="operation('/')" type="button" value="/" style="background-color: #be004e;">
+				</td>
+				<td>
+					<input @click="operation('*')" type="button" value="x" style="background-color: #be004e;">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input @click="insert('7')" type="button" value="7">
+				</td>
+				<td>
+					<input @click="insert('8')" type="button" value="8">
+				</td>
+				<td>
+					<input @click="insert('9')" type="button" value="9">
+				</td>
+				<td>
+					<input @click="operation('-')" type="button" value="-" style="background-color: #be004e;">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input @click="insert('4')" type="button" value="4">
+				</td>
+				<td>
+					<input @click="insert('5')" type="button" value="5">
+				</td>
+				<td>
+					<input @click="insert('6')" type="button" value="6">
+				</td>
+				<td>
+					<input @click="operation('+')" type="button" value="+" style="background-color: #be004e;">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input @click="insert('1')" type="button" value="1">
+				</td>
+				<td>
+					<input @click="insert('2')"type="button" value="2">
+				</td>
+				<td>
+					<input @click="insert('3')" type="button" value="3">
+				</td>
+				<td rowspan=2>
+					<input @click="equal()" type="button" value="=" style="height: 168px; background-color: green">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input @click="insert('0')" type="button" value="0" style="width: 168px; background-color: #191919;">
+				</td>
+				<td>
+					<input @click="dot()" type="button" value="." style="background-color: #3a7cff;">
+				</td>
+			</tr>
+		</table>
+
+	</div>
+	<script src="vue.global.js"></script>
+	<script>
+        const { createApp } = Vue
+
+        createApp({
+            data() {
+                return {
+                    result:'',
+
+                }
+            },
+            methods:{
+               clear(){
+				this.result='';
+			   },
+			   remov(){
+                    if(this.result=='ERROR!')
+                    {
+                        this.result='';
+                    }
+                    else{
+                        this.result=this.result.slice(0,-1);
+                    }
+                   
+                },
+			   insert(number){
+				// var num=this.result;
+				// var res1=this.result[this.result.length-1];
+				// var res2=this.result[this.result.length-2];
+				// var res3=this.result[this.result.length-3];
+				// var cut = this.result.slice(0,-2 )
+				// if(res3=='*'||res3=='/'||res3=='-'||res3=='+')
+				// {
+				// 	if(res2 == '0'){
+				// 		this.result=cut+res1;
+						
+				// 	}
+					
+				// }
+				if(this.result=='ERROR!'||this.result=='Infinity'){
+					this.result=number;
+				}
+				 else if (this.result == '0') {
+						this.result = number;
+					}
+				else{
+					this.result+=number;
+				}
+			   },
+			   dot(){
+				if(this.result=='ERROR!'){
+					this.result='';
+				}
+				this.result=this.result+'.'
+			   },
+			   operation(opera){
+				var res=this.result;
+				var replace=res.slice(0, -1);
+				if(res=='')
+				{
+					this.result='';
+				}
+				else if (res[res.length - 1] == '+' || res[res.length - 1] == '-' || res[res.length - 1] == '*' || res[res.length - 1] == '/') {
+                    this.result=replace+opera;
+                }
+				else if (res == "ERROR!") {
+                    this.result='';
+                }
+				else{
+					this.result+=opera;
+				}
+			   },
+			   equal(){
+				var res=this.result;
+				if (res[res.length - 1] == '+' || res[res.length - 1] == '-' || res[res.length - 1] == '*' || res[res.length - 1] == '/') {
+                    this.result='ERROR!';
+                }
+				// evalواذا م تحقق الشرط الي فوق يعني دخل ارقام  يجيب قيم الحقل  ينقذ العمليات  بواسطة  ال
+				//استخدمت التوسترنغ لانو الايفال بترجع رقم ف مابتستوعب احط نص جمبها فلازم ارجعو ع شكل نص وبعدين يحط الجمع والطرح ولعمليات جمبها 
+                    res=eval(this.result).toString();
+                   this.result=res;
+                
+			   },
+              
+            }
+        }).mount('#calculator')
+    </script>
+</body>
+
+</html>

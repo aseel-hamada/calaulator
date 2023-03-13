@@ -1,0 +1,32 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-size: 35px;
+	font-family: 'Orbitron' , sans-serif ;
+}
+.calculator {
+	width: 344px;
+	margin: auto;
+	background-color: #c1c1c1;
+	padding: 20px;
+	border-radius: 8px;
+}
+
+.inputDisplay {
+	width: 94%;
+	height: 80px;
+	/*background-color: #a2af77;*/
+	background-color: #ffffff;
+	margin-bottom: 20px;
+	border-radius:10px;
+	padding: 0 10px 0 10px;
+}
+
+input[type=button] {
+	width: 80px;
+	height: 80px;
+	margin: 3px;
+	color: #fff;
+	border-radius: 8px;
+	background-color: #58595b
+} 
